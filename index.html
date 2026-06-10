@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skúšanie – Programovanie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #121212;
+      --bg-card: #1a1a1a;
+      --bg-code: #1e1e1e;
+      --text-main: #E0E0E0;
+      --text-muted: #9E9E9E;
+      --accent: #569CD6;
+      --divider: #2a2a2a;
+      --code-default: #CCCCCC;
+      --code-comment: #6A9955;
+      --code-keyword: #569CD6;
+      --code-string: #CE9178;
+      --code-number: #B5CEA8;
+      --code-builtin: #DCDCAA;
+      --radius: 10px;
+      --font-ui: 'Inter', sans-serif;
+      --font-code: 'Fira Code', 'Consolas', 'Courier New', monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 446px;
+      margin: 0 auto;
+      padding: 20px 16px 48px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--divider);
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .prose {
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: var(--text-main);
+    }
+
+    .prose ul {
+      padding-left: 18px;
+      margin-top: 6px;
+    }
+
+    .prose li {
+      margin-bottom: 4px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      background: #252525;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 12.5px;
+      color: var(--code-builtin);
+      font-family: var(--font-code);
+    }
+
+    .code-block {
+      background: var(--bg-code);
+      border-radius: var(--radius);
+      padding: 14px 14px;
+      margin-top: 10px;
+      margin-bottom: 4px;
+      overflow-x: auto;
+      border: 1px solid #2d2d2d;
+    }
+
+    .code-block pre {
+      font-family: var(--font-code);
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--code-default);
+      white-space: pre;
+      margin: 0;
+    }
+
+    /* Syntax triedy */
+    .kw  { color: var(--code-keyword); }       /* kľúčové slová: try except for del in print */
+    .st  { color: var(--code-string); }        /* stringy */
+    .nm  { color: var(--code-number); }        /* čísla */
+    .bi  { color: var(--code-builtin); }       /* built-in funkcie a typy: int len min max sorted list set */
+    .cm  { color: var(--code-comment); font-style: italic; }  /* komentáre # a docstringy */
+    .df  { color: var(--code-default); }       /* bežný text/premenné */
+  </style>
+</head>
+<body>
+
+  <div class="section">
+    <div class="section-title">1. Množiny (Set)</div>
+    <hr class="section-divider">
+
+    <div class="card">
+      <div class="card-label">Čo je množina?</div>
+      <div class="prose">
+        Množina (set) je dátová štruktúra určená na ukladanie unikátnych hodnôt.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Vlastnosti</div>
+      <div class="prose">
+        <ul>
+          <li>Prvky sa neopakujú</li>
+          <li>Nemajú indexy</li>
+          <li>Poradie prvkov je náhodné</li>
+          <li>Môžu obsahovať rôzne dátové typy</li>
+          <li>Používajú sa keď potrebujeme odstrániť duplicity</li>
+          <li>Veľmi rýchlo zisťujú či sa prvok nachádza v množine</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Vytvorenie</div>
+      <div class="code-block"><pre><span class="df">m</span> <span class="df">=</span> <span class="df">{</span><span class="nm">1</span><span class="df">,</span><span class="nm">2</span><span class="df">,</span><span class="nm">3</span><span class="df">}</span>
+<span class="df">m</span> <span class="df">=</span> <span class="bi">set</span><span class="df">()</span>
+
+<span class="cm"># Ak sa hodnota opakuje:</span>
+<span class="df">{</span><span class="nm">1</span><span class="df">,</span><span class="nm">2</span><span class="df">,</span><span class="nm">2</span><span class="df">,</span><span class="nm">3</span><span class="df">}</span> <span class="df">-&gt;</span> <span class="df">{</span><span class="nm">1</span><span class="df">,</span><span class="nm">2</span><span class="df">,</span><span class="nm">3</span><span class="df">}</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Operácie nad množinami</div>
+      <div class="code-block"><pre><span class="df">m1</span> <span class="df">=</span> <span class="df">{</span><span class="nm">1</span><span class="df">,</span><span class="nm">2</span><span class="df">,</span><span class="nm">3</span><span class="df">,</span><span class="nm">4</span><span class="df">}</span>
+<span class="df">m2</span> <span class="df">=</span> <span class="df">{</span><span class="nm">3</span><span class="df">,</span><span class="nm">4</span><span class="df">,</span><span class="nm">5</span><span class="df">,</span><span class="nm">6</span><span class="df">}</span>
+
+<span class="cm"># Zjednotenie</span>
+<span class="bi">print</span><span class="df">(m1</span> <span class="df">|</span> <span class="df">m2)</span>   <span class="cm"># {1, 2, 3, 4, 5, 6}</span>
+
+<span class="cm"># Prienik</span>
+<span class="bi">print</span><span class="df">(m1</span> <span class="df">&amp;</span> <span class="df">m2)</span>   <span class="cm"># {3, 4}</span>
+
+<span class="cm"># Rozdiel</span>
+<span class="bi">print</span><span class="df">(m1</span> <span class="df">-</span> <span class="df">m2)</span>   <span class="cm"># {1, 2}</span>
+
+<span class="cm"># Vylučovacie zjednotenie (vyhodí prvky ktoré sú v obidvoch)</span>
+<span class="bi">print</span><span class="df">(m1</span> <span class="df">^</span> <span class="df">m2)</span>   <span class="cm"># {1, 2, 5, 6}</span>
+
+<span class="cm"># Kontrola či je prvok v množine</span>
+<span class="bi">print</span><span class="df">(</span><span class="nm">3</span> <span class="kw">in</span> <span class="df">m1)</span>  <span class="cm"># True</span>
+
+<span class="cm"># Podmnožina</span>
+<span class="bi">print</span><span class="df">({</span><span class="nm">1</span><span class="df">,</span><span class="nm">2</span><span class="df">}</span> <span class="df">&lt;=</span> <span class="df">m1)</span>  <span class="cm"># True</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Najpoužívanejšie funkcie</div>
+      <div class="code-block"><pre><span class="df">mnozina</span> <span class="df">=</span> <span class="df">{</span><span class="nm">5</span><span class="df">,</span><span class="nm">4</span><span class="df">,</span><span class="nm">3</span><span class="df">,</span><span class="nm">2</span><span class="df">,</span><span class="nm">1</span><span class="df">}</span>
+
+<span class="bi">print</span><span class="df">(</span><span class="bi">len</span><span class="df">(mnozina))</span>     <span class="cm"># 5</span>
+<span class="bi">print</span><span class="df">(</span><span class="bi">min</span><span class="df">(mnozina))</span>     <span class="cm"># 1</span>
+<span class="bi">print</span><span class="df">(</span><span class="bi">max</span><span class="df">(mnozina))</span>     <span class="cm"># 5</span>
+<span class="bi">print</span><span class="df">(</span><span class="bi">sorted</span><span class="df">(mnozina))</span>  <span class="cm"># [1, 2, 3, 4, 5]</span>
+<span class="bi">print</span><span class="df">(</span><span class="bi">list</span><span class="df">(mnozina))</span>    <span class="cm"># [1, 2, 3, 4, 5]</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Najpoužívanejšie metódy</div>
+      <div class="code-block"><pre><span class="df">m</span> <span class="df">=</span> <span class="df">{</span><span class="nm">1</span><span class="df">,</span><span class="nm">2</span><span class="df">,</span><span class="nm">3</span><span class="df">}</span>
+
+<span class="df">m</span><span class="df">.add(</span><span class="nm">4</span><span class="df">)</span>       <span class="cm"># Pridá nový prvok do množiny</span>
+<span class="df">m</span><span class="df">.remove(</span><span class="nm">2</span><span class="df">)</span>    <span class="cm"># Vymaže prvok. Ak tam nie je, vyhodí chybu</span>
+<span class="df">m</span><span class="df">.discard(</span><span class="nm">10</span><span class="df">)</span>  <span class="cm"># Vymaže prvok. Ak tam nie je, neurobí nič</span>
+<span class="df">m</span><span class="df">.pop()</span>        <span class="cm"># Vymaže náhodný prvok a vráti ho</span>
+<span class="df">m</span><span class="df">.clear()</span>      <span class="cm"># Vymaže úplne celú množinu</span>
+
+<span class="bi">print</span><span class="df">(m)</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Kde sa používa?</div>
+      <div class="prose">
+        <ul>
+          <li>Odstraňovanie duplicít</li>
+          <li>Porovnávanie skupín dát</li>
+          <li>Evidencia unikátnych hodnôt</li>
+          <li>Hľadanie spoločných prvkov</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. Slovníky (Dictionary)</div>
+    <hr class="section-divider">
+
+    <div class="card">
+      <div class="card-label">Čo je slovník?</div>
+      <div class="prose">
+        Slovník je dátová štruktúra typu <strong>kľúč : hodnota</strong>.<br><br>
+        Príklady párov:<br><br>
+        meno → vek  |  produkt → cena  |  štát → hlavné mesto
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Vlastnosti</div>
+      <div class="prose">
+        <ul>
+          <li>Každý kľúč je jedinečný</li>
+          <li>Pristupujeme cez kľúč</li>
+          <li>Nepoužívajú sa indexy</li>
+          <li>Veľmi rýchle vyhľadávanie</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Základné operácie</div>
+      <div class="code-block"><pre><span class="df">vek</span> <span class="df">=</span> <span class="df">{</span>
+    <span class="st">"Jakub"</span><span class="df">:</span> <span class="nm">18</span><span class="df">,</span>
+    <span class="st">"Adam"</span><span class="df">:</span>  <span class="nm">20</span><span class="df">,</span>
+    <span class="st">"Janka"</span><span class="df">:</span> <span class="nm">17</span>
+<span class="df">}</span>
+
+<span class="bi">print</span><span class="df">(vek[</span><span class="st">"Adam"</span><span class="df">])</span>   <span class="cm"># 20</span>
+
+<span class="df">vek[</span><span class="st">"Peter"</span><span class="df">]</span> <span class="df">=</span> <span class="nm">25</span>   <span class="cm"># Pridanie nového záznamu</span>
+<span class="df">vek[</span><span class="st">"Jakub"</span><span class="df">]</span> <span class="df">=</span> <span class="nm">30</span>   <span class="cm"># Prepísanie existujúcej hodnoty</span>
+
+<span class="bi">print</span><span class="df">(</span><span class="st">"Adam"</span> <span class="kw">in</span> <span class="df">vek)</span>  <span class="cm"># True / False</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Prechádzanie slovníka</div>
+      <div class="code-block"><pre><span class="kw">for</span> <span class="df">kluc</span> <span class="kw">in</span> <span class="df">vek:</span>
+    <span class="bi">print</span><span class="df">(kluc, vek[kluc])</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Metódy</div>
+      <div class="code-block"><pre><span class="bi">print</span><span class="df">(vek.keys())</span>
+<span class="cm"># dict_keys(['Jakub', 'Adam', 'Janka', 'Peter'])</span>
+
+<span class="bi">print</span><span class="df">(vek.values())</span>
+<span class="cm"># dict_values([30, 20, 17, 25])</span>
+
+<span class="bi">print</span><span class="df">(vek.items())</span>
+<span class="cm"># dict_items([('Jakub', 30), ('Adam', 20), ...])</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Metóda get()</div>
+      <div class="prose">
+        Výhoda: nevyhodí chybu ak kľúč neexistuje.<br><br>
+        <code style="background: #252525; padding: 2px 6px; border-radius: 4px; font-family: var(--font-code); color: var(--code-builtin);">slovnik.get(key, volitelna_defaultna_hodnota)</code><br><br>
+        Vráti hodnotu k danému kľúču. Ak kľúč neexistuje, vráti None alebo prednastavenú hodnotu.
+      </div>
+      <div class="code-block"><pre><span class="bi">print</span><span class="df">(vek.get(</span><span class="st">"Adam"</span><span class="df">))</span>               <span class="cm"># 20</span>
+<span class="bi">print</span><span class="df">(vek.get(</span><span class="st">"Marek"</span><span class="df">))</span>              <span class="cm"># None</span>
+<span class="bi">print</span><span class="df">(vek.get(</span><span class="st">"Marek"</span><span class="df">,</span> <span class="st">"Neexistuje"</span><span class="df">))</span>  <span class="cm"># Neexistuje</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Odstránenie položky a triedenie</div>
+      <div class="code-block"><pre><span class="kw">del</span> <span class="df">vek[</span><span class="st">"Adam"</span><span class="df">]</span>       <span class="cm"># Odstránenie položky</span>
+<span class="bi">print</span><span class="df">(</span><span class="bi">sorted</span><span class="df">(vek))</span>   <span class="cm"># Triedenie kľúčov</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Kde sa používa?</div>
+      <div class="prose">
+        <ul>
+          <li>Databázy</li>
+          <li>Prekladače</li>
+          <li>Konfigurácie programov</li>
+          <li>Evidencia užívateľov</li>
+          <li>Skladové systémy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. Ntice (Tuple)</div>
+    <hr class="section-divider">
+
+    <div class="card">
+      <div class="card-label">Čo je ntica?</div>
+      <div class="prose">
+        Ntica (tuple) je podobná zoznamu.<br><br>
+        <strong>Rozdiel: Ntica je nemeniteľná.</strong><br><br>
+        Po vytvorení nemôžeme:
+        <ul>
+          <li>Pridávať prvky</li>
+          <li>Mazať prvky</li>
+          <li>Meniť hodnoty</li>
+        </ul>
+        <br>
+        <strong>Výhoda:</strong> rýchlejšia, bezpečnejšia, vhodná pre konštantné údaje.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Základné operácie</div>
+      <div class="code-block"><pre><span class="df">t</span> <span class="df">=</span> <span class="df">(</span><span class="nm">1</span><span class="df">,</span><span class="nm">2</span><span class="df">,</span><span class="nm">3</span><span class="df">,</span><span class="nm">4</span><span class="df">)</span>
+
+<span class="bi">print</span><span class="df">(t[</span><span class="nm">0</span><span class="df">])</span>      <span class="cm"># Dá sa indexovať</span>
+<span class="bi">print</span><span class="df">(</span><span class="bi">len</span><span class="df">(t))</span>    <span class="cm"># Dĺžka ntice</span>
+
+<span class="kw">for</span> <span class="df">prvok</span> <span class="kw">in</span> <span class="df">t:</span>
+    <span class="bi">print</span><span class="df">(prvok)</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Operácie a kontrola výskytu</div>
+      <div class="code-block"><pre><span class="df">a</span> <span class="df">=</span> <span class="df">(</span><span class="nm">1</span><span class="df">,</span><span class="nm">2</span><span class="df">)</span>
+<span class="df">b</span> <span class="df">=</span> <span class="df">(</span><span class="nm">3</span><span class="df">,</span><span class="nm">4</span><span class="df">)</span>
+
+<span class="cm"># Jediná možnosť ako pridať prvky je sčítať dve ntice</span>
+<span class="bi">print</span><span class="df">(a</span> <span class="df">+</span> <span class="df">b)</span>    <span class="cm"># (1, 2, 3, 4)</span>
+<span class="bi">print</span><span class="df">(a</span> <span class="df">*</span> <span class="nm">3</span><span class="df">)</span>    <span class="cm"># (1, 2, 1, 2, 1, 2)</span>
+<span class="bi">print</span><span class="df">(</span><span class="nm">2</span> <span class="kw">in</span> <span class="df">a)</span>   <span class="cm"># True / False</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Rozbaľovanie ntice</div>
+      <div class="prose">
+        Takto si do premennej vieme zadefinovať každý prvok v tuple:
+      </div>
+      <div class="code-block"><pre><span class="df">osoba</span> <span class="df">=</span> <span class="df">(</span><span class="st">"Jakub"</span><span class="df">,</span> <span class="nm">18</span><span class="df">,</span> <span class="st">"Bratislava"</span><span class="df">)</span>
+
+<span class="df">meno, vek, mesto</span> <span class="df">=</span> <span class="df">osoba</span>
+
+<span class="bi">print</span><span class="df">(meno)</span>   <span class="cm"># Jakub</span>
+<span class="bi">print</span><span class="df">(vek)</span>    <span class="cm"># 18</span>
+<span class="bi">print</span><span class="df">(mesto)</span>  <span class="cm"># Bratislava</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Rezy (Slices)</div>
+      <div class="prose">
+        Syntax: <code style="background: #252525; padding: 2px 6px; border-radius: 4px; font-family: var(--font-code); color: var(--code-builtin);">ntica[od:po]</code> — index „po" je vylúčený. Voliteľné tretie číslo `:2` vymaže každý druhý prvok v danom rozmedzí indexov.
+      </div>
+      <div class="code-block"><pre><span class="bi">print</span><span class="df">(osoba[</span><span class="nm">0</span><span class="df">:</span><span class="nm">2</span><span class="df">])</span>   <span class="cm"># ('Jakub', 18)</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Kde sa používa?</div>
+      <div class="prose">
+        <ul>
+          <li>Súradnice bodov</li>
+          <li>Dátumy</li>
+          <li>RGB farby</li>
+          <li>Údaje ktoré sa nemajú meniť</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4. Výnimky a Chybové Hlášky</div>
+    <hr class="section-divider">
+
+    <div class="card">
+      <div class="card-label">Čo sú výnimky?</div>
+      <div class="prose">
+        Výnimky (Exceptions) sa používajú na ošetrenie chýb počas behu programu.<br><br>
+        Ak by sme ich nepoužili, program by sa ukončil pri prvej chybe.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Základná syntax</div>
+      <div class="code-block"><pre><span class="kw">try</span><span class="df">:</span>
+    <span class="df">x</span> <span class="df">=</span> <span class="bi">int</span><span class="df">(</span><span class="bi">input</span><span class="df">(</span><span class="st">"Zadaj cislo: "</span><span class="df">))</span>
+    <span class="bi">print</span><span class="df">(x)</span>
+<span class="kw">except</span> <span class="df">ValueError:</span>
+    <span class="bi">print</span><span class="df">(</span><span class="st">"Nezadal si cele cislo"</span><span class="df">)</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Najčastejšie výnimky</div>
+      <div class="prose">
+        <ul>
+          <li><strong>ValueError</strong> — zlý formát hodnoty</li>
+          <li><strong>IndexError</strong> — index mimo rozsahu</li>
+          <li><strong>TypeError</strong> — nesprávny dátový typ</li>
+          <li><strong>ZeroDivisionError</strong> — delenie nulou</li>
+          <li><strong>FileNotFoundError</strong> — súbor neexistuje</li>
+          <li><strong>AttributeError</strong> — objekt nemá danú metódu</li>
+          <li><strong>ImportError</strong> — nepodarilo sa importovať modul</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Príklad – ZeroDivisionError</div>
+      <div class="code-block"><pre><span class="kw">try</span><span class="df">:</span>
+    <span class="bi">print</span><span class="df">(</span><span class="nm">10</span> <span class="df">/</span> <span class="nm">0</span><span class="df">)</span>
+<span class="kw">except</span> <span class="df">ZeroDivisionError:</span>
+    <span class="bi">print</span><span class="df">(</span><span class="st">"Neda sa delit nulou"</span><span class="df">)</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Viac výnimiek naraz</div>
+      <div class="code-block"><pre><span class="kw">try</span><span class="df">:</span>
+    <span class="df">index</span> <span class="df">=</span> <span class="bi">int</span><span class="df">(</span><span class="bi">input</span><span class="df">(</span><span class="st">"Index: "</span><span class="df">))</span>
+    <span class="df">zoz</span> <span class="df">=</span> <span class="df">[</span><span class="st">"a"</span><span class="df">,</span><span class="st">"b"</span><span class="df">,</span><span class="st">"c"</span><span class="df">]</span>
+    <span class="bi">print</span><span class="df">(zoz[index])</span>
+<span class="kw">except</span> <span class="df">ValueError:</span>
+    <span class="bi">print</span><span class="df">(</span><span class="st">"Musis zadat cislo"</span><span class="df">)</span>
+<span class="kw">except</span> <span class="df">IndexError:</span>
+    <span class="bi">print</span><span class="df">(</span><span class="st">"Index mimo rozsahu"</span><span class="df">)</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Univerzálna výnimka</div>
+      <div class="code-block"><pre><span class="kw">try</span><span class="df">:</span>
+    <span class="df">...</span>
+<span class="kw">except</span> <span class="df">Exception</span> <span class="kw">as</span> <span class="df">chyba:</span>
+    <span class="bi">print</span><span class="df">(chyba)</span></pre></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Prečo sa používajú?</div>
+      <div class="prose">
+        <ul>
+          <li>Program nespadne</li>
+          <li>Lepšia komunikácia s užívateľom</li>
+          <li>Bezpečné spracovanie vstupov</li>
+          <li>Práca so súbormi a databázami</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Krátke Zhrnutie na Skúšanie</div>
+    <hr class="section-divider">
+
+    <div class="card">
+      <div class="card-label">Množina</div>
+      <div class="prose">
+        <ul>
+          <li>Unikátne hodnoty</li>
+          <li>Bez indexov</li>
+          <li>add, remove, discard</li>
+          <li>Zjednotenie, prienik, rozdiel</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Slovník</div>
+      <div class="prose">
+        <ul>
+          <li>Kľúč : hodnota</li>
+          <li>Prístup cez kľúč</li>
+          <li>keys, values, items, get</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Ntica</div>
+      <div class="prose">
+        <ul>
+          <li>Nemenný zoznam</li>
+          <li>Rýchlejšia a bezpečnejšia</li>
+          <li>Používa sa pre konštantné dáta</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Výnimky</div>
+      <div class="prose">
+        <ul>
+          <li>Ošetrujú chyby programu</li>
+          <li>try, except</li>
+          <li>ValueError, IndexError, TypeError, ZeroDivisionError</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
